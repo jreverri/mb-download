@@ -1,0 +1,32 @@
+---
+- name: "Process sample: {{ sample.file_name | default(sample.sha256_hash) }}"
+  block:
+    - name: "Download sample: {{ sample.file_name | default(sample.sha256_hash) }}"
+      ansible.builtin.uri:
+        url: "{{ malwarebazaar_api_url }}"
+        dest: "{{ download_dir }}/{{ sample.sha256_hash }}.zip"
+        method: POST
+        body_format: form-urlencoded
+        body:
+          query: "get_file"
+          sha256_hash: "{{ sample.sha256_hash }}"
+        headers:
+          Auth-Key: "{{ malwarebazaar_api_key }}"
+        creates: "{{ download_dir }}/{{ sample.sha256_hash }}.zip"
+
+    - name: "Extract sample: {{ sample.file_name | default(sample.sha256_hash) }}"
+      ansible.builtin.command:
+        cmd: >
+          7z x -y -pinfected
+          "{{ download_dir }}/{{ sample.sha256_hash }}.zip"
+          -o"{{ download_dir }}"
+
+    - name: "Clean up archive: {{ sample.file_name | default(sample.sha256_hash) }}"
+      ansible.builtin.file:
+        path: "{{ download_dir }}/{{ sample.sha256_hash }}.zip"
+        state: absent
+
+  rescue:
+    - name: "Log failure for sample {{ sample.sha256_hash }}"
+      ansible.builtin.debug:
+        msg: "Failed to process sample {{ sample.sha256_hash }}. Error: {{ ansible_failed_result.msg | default('Unknown error') }}"

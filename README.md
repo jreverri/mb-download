@@ -1,10 +1,11 @@
-# mb-download
+# malware bazaar downloader
 ![malware bazaar dowloader](mb-download.png)
 
-quick and dirty ansible playbook to download and extract recent files from malware bazaar
-# warning
+quick and dirty ansible playbook to download and extract recent malware samples from abuse.ch's malware bazaar
+# --WARNING--
 this script will download and extract actual malware samples. you have been warned
 ## usage
+tested on ubuntu 24.04
 - install ansible
 - clone repo
 - update download_malware.yml with your abuse.ch API key

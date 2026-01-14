@@ -12,15 +12,15 @@ HERE BE DRAGONS - this script will download and extract actual malware samples. 
 ## usage
 tested on ubuntu 24.04 and ansibe v2.16.3
 - install ansible
-``` sudo apt-get install ansible```
+```sudo apt-get install ansible```
 - clone this repo
-``` git clone https://github.com/jreverri/mb-download.git ```
+```git clone https://github.com/jreverri/mb-download.git ```
 - update ```download_malware.yml``` with your abuse.ch API key obtained from https://bazaar.abuse.ch/api/
 - run
 ```ansible-playbook download_malware.yaml``` from mb-download directory
 - the script will create a directory called ```malware_samples_ansible``` then download and extract the samples
 ## note
-by default the playbook downloads all samples from the last 24 hours
+by default the playbook downloads samples from the last 24 hours
 
 ## please adhear to abuse.ch's ToS
 Terms of Services (ToS)
